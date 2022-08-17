@@ -12,15 +12,16 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" style="font-size: large" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -30,11 +31,31 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-
+                        <li class="nav-link text-info-50 {{Request::is('book/*')? 'active':''}}">Books</li>
+                        @if(Auth::check())
+                            <li class="nav-link text-info-50 {{Request::is('bookshelf/*')? 'active':''}}">Bookshelf</li>
+                        @endif
+                        <li class="nav-link text-info-50 {{Request::is('story/*')? 'active':''}}">Story</li>
+{{--                        <li class="nav-link text-info-50">Dramas</li>--}}
                     </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
+                        <div class="input-group">
+                            <form id="searchForm" method="POST" action="{{ route('search') }}">
+                                @csrf
+                                <input type="hidden" name="query" id="query">
+                            </form>
+                            <input id="textBox" type="text" class="form-control rounded" placeholder="Search Anything">
+                            <div class="input-group-append">
+                                <button class="btn btn-success opacity-75" onclick="{
+                                    document.querySelector('#query').value = document.querySelector('#textBox').value;
+                                    document.querySelector('#searchForm').submit();
+                                }">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
@@ -71,10 +92,12 @@
                 </div>
             </div>
         </nav>
-
         <main class="py-4">
             @yield('content')
         </main>
     </div>
+    <footer class="footer mt-auto bg-primary" style="text-align: center">
+            <span class="text-white">All Rights Reserved By <a class="text-warning" href="/">My Reading List</a> &copy; 2022</span>
+    </footer>
 </body>
 </html>

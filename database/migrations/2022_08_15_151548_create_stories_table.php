@@ -15,6 +15,14 @@ return new class extends Migration
     {
         Schema::create('stories', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->string('image');
+            $table->text('content');
+            $table->string('description');
+            $table->unsignedBigInteger('author');
+            $table->unsignedBigInteger('genre');
+            $table->foreign('author')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('genre')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });
     }

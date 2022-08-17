@@ -15,6 +15,15 @@ return new class extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->string('image');
+            $table->string('description');
+            $table->string('author');
+            $table->dateTime('date');
+            $table->unsignedBigInteger('genre');
+            $table->unsignedBigInteger('publisher');
+            $table->foreign('publisher')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('genre')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });
     }

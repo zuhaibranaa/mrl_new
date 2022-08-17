@@ -5,9 +5,9 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+                <div class="card-header bg-primary text-white">{{ __('Register') }}</div>
 
-                <div class="card-body">
+                <div class="card-body bg-info bg-opacity-10">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
@@ -33,6 +33,43 @@
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="DOB" class="col-md-4 col-form-label text-md-end">{{ __('Date Of Birth') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="DOB" type="date" class="form-control @error('DOB') is-invalid @enderror" name="DOB" value="{{ old('DOB') }}" required>
+
+                                @error('DOB')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-12 mx-5">
+                                <label for="male" class="col-md-4 col-form-label text-md-end">{{ __('Male') }}</label>
+                                <input id="male" type="radio" name="gender" value="male" required>
+                                <label for="female" class="col-md-4 col-form-label text-md-end">{{ __('Female') }}</label>
+                                <input id="female" type="radio" name="gender" value="female" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="image" class="col-md-4 col-form-label text-md-end">{{ __('Image') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image" value="{{ old('image') }}" required>
+
+                                @error('image')
+                                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
