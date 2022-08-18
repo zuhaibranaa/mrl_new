@@ -6,7 +6,9 @@
                 <h3 class="text-primary">All Stories</h3>
             </div>
             <div class="col-md-3 px-5 mb-3">
-                @include('components.addNewStory')
+                @if(Auth::check())
+                    @include('components.addNewStory')
+                @endif
             </div>
         </div>
         @foreach($stories as $story)

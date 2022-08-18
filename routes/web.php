@@ -15,7 +15,9 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $books = Book::orderBy('created_at', 'DESC')->get();
+    $stories = Story::orderBy('created_at', 'DESC')->get();
+    return view('welcome',['books'=>$books,'stories' => $stories]);
 });
 
 Auth::routes();
@@ -44,10 +46,5 @@ Route::middleware('auth')->get('mybooks',function (Request $request)
 
 Route::middleware('auth')->get('mystories',function (Request $request)
 {
-    if (auth()->user()->is_admin)
-    {
-        return view('mystories',['stories' => Story::where('author','=',auth()->user()->id)->simplePaginate(5)]);
-    }else{
-        abort(404);
-    }
+    return view('mystories',['stories' => Story::where('author','=',auth()->user()->id)->simplePaginate(5)]);
 })->name('mystories');

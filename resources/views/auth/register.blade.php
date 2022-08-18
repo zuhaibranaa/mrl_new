@@ -8,9 +8,8 @@
                 <div class="card-header bg-primary text-white">{{ __('Register') }}</div>
 
                 <div class="card-body bg-info bg-opacity-10">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" enctype="multipart/form-data" action="{{ route('register') }}">
                         @csrf
-
                         <div class="row mb-3">
                             <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
 

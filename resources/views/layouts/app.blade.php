@@ -16,6 +16,9 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <style>
+        @yield('css')
+    </style>
 </head>
 <body class="d-flex flex-column min-vh-100">
     <div id="app">

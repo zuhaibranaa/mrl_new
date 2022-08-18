@@ -19,7 +19,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form id="bookShelf" action="{{ route('bookshelf.create') }}" method="POST">
+                                <form id="bookShelf" action="{{ route('bookshelf.store') }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="book" value="{{$book->id}}">
                                     <select class="form-select" name="status">
@@ -31,7 +31,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
+                                <input form="bookShelf" type="submit" class="btn btn-primary" value="Save changes"/>
                             </div>
                         </div>
                     </div>
