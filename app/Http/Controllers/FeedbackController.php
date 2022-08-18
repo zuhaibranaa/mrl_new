@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Feedback;
 use Illuminate\Http\Request;
 
 class FeedbackController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +19,7 @@ class FeedbackController extends Controller
      */
     public function index()
     {
-        //
+        abort(404);
     }
 
     /**
@@ -23,7 +29,7 @@ class FeedbackController extends Controller
      */
     public function create()
     {
-        //
+        abort(404);
     }
 
     /**
@@ -34,7 +40,16 @@ class FeedbackController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $feedback = new Feedback();
+        $feedback->user = auth()->user()->id;
+        if ($request->type == 'book'){
+            $feedback->book = $request->book;
+        }else{
+            $feedback->story = $request->story;
+        }
+        $feedback->rating = $request->rating;
+        $feedback->save();
+        return redirect()->back();
     }
 
     /**
@@ -45,7 +60,7 @@ class FeedbackController extends Controller
      */
     public function show($id)
     {
-        //
+        abort(404);
     }
 
     /**
@@ -56,7 +71,7 @@ class FeedbackController extends Controller
      */
     public function edit($id)
     {
-        //
+        abort(404);
     }
 
     /**
@@ -68,7 +83,7 @@ class FeedbackController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        abort(404);
     }
 
     /**
@@ -79,6 +94,6 @@ class FeedbackController extends Controller
      */
     public function destroy($id)
     {
-        //
+        abort(404);
     }
 }

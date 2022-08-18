@@ -24,22 +24,30 @@ Route::resources([
     'bookshelf' => \App\Http\Controllers\BookShelfController::class,
     'profile' => \App\Http\Controllers\ProfileController::class,
     'story' => \App\Http\Controllers\StoryController::class,
+    'feedback' => \App\Http\Controllers\FeedbackController::class,
 ]);
-Route::get('/dashboard', function () {
-    return redirect(url('/'));
-});
 Route::post('search',function (Request $request)
 {
-    $book = Book::where('title', 'LIKE', $request->input('query'))->get();
-    $story = Story::where('title', 'LIKE', $request->input('query'))->get();
-    return [$story,$book];
-//    return Inertia::render('HomePage',[
-//        'book' => $book,
-//        'story' => $story,
-//        'auth' => auth()->user(),
-//    ]
-//);
+    $book = Book::where('title', 'LIKE', '%'.$request->input('query').'%')->get();
+    $story = Story::where('title', 'LIKE', '%'.$request->input('query').'%')->get();
+    return view('search')->with('books',$book)->with('stories',$story);
 })->name('search');
+Route::middleware('auth')->get('mybooks',function (Request $request)
+{
+    if (auth()->user()->is_admin)
+    {
+        return view('mybooks',['books' => Book::where('publisher','=',auth()->user()->id)->simplePaginate(5)]);
+    }else{
+        abort(404);
+    }
+})->name('mybooks');
 
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::middleware('auth')->get('mystories',function (Request $request)
+{
+    if (auth()->user()->is_admin)
+    {
+        return view('mystories',['stories' => Story::where('author','=',auth()->user()->id)->simplePaginate(5)]);
+    }else{
+        abort(404);
+    }
+})->name('mystories');

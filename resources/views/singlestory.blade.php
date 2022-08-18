@@ -1,9 +1,17 @@
 @extends('layouts.app')
 @section('content')
+    @php
+        $book = new \App\Models\Story();
+        $book->id = 1;
+        $book->title = 'Harry Potter';
+        $book->description = 'Harry Potter and The Half Blood Prince';
+        $book->author = 'J.K. Rowling';
+        $rating = 0;
+    @endphp
     <div class="row align-content-around mx-2">
         <div class="col-md-4">
             <div class="card container pt-2 pb-2 bg-info bg-opacity-10">
-                <img src="{{asset('images/'.$book->image)}}" class="rounded"/>
+                <img src="{{asset($book->image)}}" class="rounded"/>
                 <button type="button" class="btn mt-2 btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     Add To Shelf
                 </button>
@@ -15,7 +23,7 @@
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Add To Shelf</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -41,14 +49,13 @@
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel"> Give Your Feedback </h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form id="feedback" action="{{ route('feedback.store') }}" method="POST">
+                                <form id="bookShelf" action="feedback.create" method="POST">
                                     @csrf
                                     <input type="hidden" name="book" value="{{$book->id}}">
-                                    <input type="hidden" name="type" value="book">
                                     <div class="container d-flex justify-content-around">
                                         <div class="row">
                                             <div class="col-md-12">
@@ -71,9 +78,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" onclick="{
-                                    document.querySelector('#feedback').submit();
-                                }" class="btn btn-primary">Submit</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
                             </div>
                         </div>
                     </div>
@@ -93,26 +98,26 @@
             </div>
             <div class="justify-content-between d-flex">
                 <span class="text-warning">Genre:</span>
-                <span class="text-warning">{{\App\Models\Category::find($book->genre)->name}}</span>
+                <span class="text-warning">{{\App\Models\Category::find($book->genre? $book->genre:1)->name}}</span>
             </div>
             <div class="justify-content-between d-flex">
                 <span class="text-danger">Publisher :</span>
-                <span class="text-danger">{{\App\Models\User::find($book->publisher)->name}}</span>
+                <span class="text-danger">{{\App\Models\User::find($book->publisher? $book->genre:1)->name}}</span>
             </div>
 {{--            Star Ratings--}}
             <div class="container d-flex justify-content-center">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="stars">
-                            <input {{ $feedback == 5? 'checked' : '' }} disabled class="star star-5" id="rated-star-5" type="radio" name="star"/>
+                            <input {{ $rating == 5? 'checked' : '' }} disabled class="star star-5" id="rated-star-5" type="radio" name="star"/>
                             <label class="star star-5" for="rated-star-5"></label>
-                            <input {{ $feedback == 4? 'checked' : '' }} disabled class="star star-4" id="rated-star-4" type="radio" name="star"/>
+                            <input {{ $rating == 4? 'checked' : '' }} disabled class="star star-4" id="rated-star-4" type="radio" name="star"/>
                             <label class="star star-4" for="rated-star-4"></label>
-                            <input {{ $feedback == 3? 'checked' : '' }} disabled class="star star-3" id="rated-star-3" type="radio" name="star"/>
+                            <input {{ $rating == 3? 'checked' : '' }} disabled class="star star-3" id="rated-star-3" type="radio" name="star"/>
                             <label class="star star-3" for="rated-star-3"></label>
-                            <input {{ $feedback == 2? 'checked' : '' }} disabled class="star star-2" id="rated-star-2" type="radio" name="star"/>
+                            <input {{ $rating == 2? 'checked' : '' }} disabled class="star star-2" id="rated-star-2" type="radio" name="star"/>
                             <label class="star star-2" for="rated-star-2"></label>
-                            <input {{ $feedback == 1? 'checked' : '' }} disabled class="star star-1" id="rated-star-1" type="radio" name="star"/>
+                            <input {{ $rating == 1? 'checked' : '' }} disabled class="star star-1" id="rated-star-1" type="radio" name="star"/>
                             <label class="star star-1" for="rated-star-1"></label>
                         </div>
                     </div>

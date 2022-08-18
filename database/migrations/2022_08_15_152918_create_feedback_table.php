@@ -16,10 +16,12 @@ return new class extends Migration
         Schema::create('feedback', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user');
-            $table->integer('item_id');
-            $table->boolean('is_book');//true for Book false for Story
+            $table->unsignedBigInteger('book')->nullable(true);
+            $table->unsignedBigInteger('story')->nullable(true);
             $table->integer('rating');
             $table->foreign('user')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('book')->references('id')->on('books')->onDelete('cascade');
+            $table->foreign('story')->references('id')->on('stories')->onDelete('cascade');
             $table->timestamps();
         });
     }

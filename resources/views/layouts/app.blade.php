@@ -31,11 +31,16 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-                        <li class="nav-link text-info-50 {{Request::is('book/*')? 'active':''}}">Books</li>
+                        <a class="nav-link text-info-50 {{Request::is('book')? 'active':''}}" href="{{ route('book.index') }}">Books</a>
+                        <a class="nav-link text-info-50 {{Request::is('story')? 'active':''}}" href="{{ route('story.index') }}">Story</a>
                         @if(Auth::check())
-                            <li class="nav-link text-info-50 {{Request::is('bookshelf/*')? 'active':''}}">Bookshelf</li>
+                            @if(auth()->user()->is_admin)
+                                <a class="nav-link text-info-50 {{Request::is('mybooks')? 'active':''}}" href="{{ route('mybooks') }}">My Books</a>
+                            @endif
+                            <a class="nav-link text-info-50 {{Request::is('mystories')? 'active':''}}" href="{{ route('mystories') }}">My Stories</a>
+                            <a class="nav-link text-info-50 {{Request::is('profile')? 'active':''}}" href="{{ route('profile.index') }}">Profile</a>
+                            <a class="nav-link text-info-50 {{Request::is('mybookshelf')? 'active':''}}" href="{{ route('bookshelf.index') }}">My Bookshelf</a>
                         @endif
-                        <li class="nav-link text-info-50 {{Request::is('story/*')? 'active':''}}">Story</li>
 {{--                        <li class="nav-link text-info-50">Dramas</li>--}}
                     </ul>
 

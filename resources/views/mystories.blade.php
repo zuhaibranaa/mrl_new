@@ -3,7 +3,7 @@
     <div class="container mt-5">
         <div class="row px-5 justify-content-between">
             <div class="col-md-3 px-5">
-                <h3 class="text-primary">All Stories</h3>
+                <h3 class="text-primary">My Stories</h3>
             </div>
             <div class="col-md-3 px-5 mb-3">
                 @include('components.addNewStory')
@@ -23,7 +23,7 @@
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                 </div>
-                                <span>310</span>
+                                <span class="mx-2"> 310 Reviews</span>
                             </div>
                             <div class="mt-1 mb-1 spec-1">
                                 <span>{{$story->content}}</span>
@@ -39,8 +39,15 @@
                             </div>
                             <h6 class="text-success">{{\App\Models\User::find($story->author)->name}}</h6>
                             <h6 class="text-success">{{$story->created_at->format('d M Y')}}</h6>
+                            <form id="{{'delete-'.$story->id}}" method="POST" action="{{ route('story.destroy',parameters: $story->id) }}">
+                                @csrf
+                                @method('DELETE')
+                            </form>
                             <div class="d-flex flex-column mt-4">
                                 <a class="btn btn-primary btn-sm mt-5" href="{{ route('story.show',parameters: $story->id) }}">Details</a>
+                                <button class="btn btn-danger btn-sm mt-2" onclick="{
+                                    document.querySelector('#{{'delete-'.$story->id}}').submit()
+                                }">Delete</button>
                             </div>
                         </div>
                     </div>

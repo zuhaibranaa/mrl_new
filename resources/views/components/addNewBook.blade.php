@@ -12,15 +12,18 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="POST" id="newBook" action="{{ route('book.create') }}">
+                <form method="POST" id="newBook" enctype="multipart/form-data" action="{{ route('book.store') }}">
+                    @csrf
                     <label for="title">Title : </label>
                     <input required class="form-control" type="text" id="title" name="title">
                     <label for="image">Image : </label>
-                    <input required class="form-control" type="file" id="image" name="image">
+                    <input required class="form-control" type="file" id="image" accept="image/png, image/jpeg" name="image">
                     <label for="description">Description : </label>
                     <textarea required class="form-control" id="description" name="description"></textarea>
                     <label for="date">Release Date : </label>
                     <input required class="form-control" type="date" id="date" name="date">
+                    <label for="author">Author : </label>
+                    <input required class="form-control" type="text" id="author" name="author">
                     <label for="genre">Genre : </label>
                     <select required class="form-control" id="genre" name="genre">
                         @foreach(\App\Models\Category::all() as $cat)

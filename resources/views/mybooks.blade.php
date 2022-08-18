@@ -28,11 +28,11 @@
                                 <h5>{{$book->title}}</h5>
                                 <div class="d-flex flex-row">
                                     <div class="ratings mr-2">
-                                        @for($i = 0;$i < $getRating($book->id)[0];$i++)
-                                            <i class="fa fa-star"></i>
-                                        @endfor
+{{--                                        @for($i = 0;$i < $getRating($book->id)[0];$i++)--}}
+{{--                                            <i class="fa fa-star"></i>--}}
+{{--                                        @endfor--}}
                                     </div>
-                                    <span class="mx-2">{{$getRating($book->id)[1]}} Feedbacks</span>
+{{--                                    <span class="mx-2">{{$getRating($book->id)[1]}} Feedbacks</span>--}}
                                 </div>
                                 <div class="mt-1 mb-1 spec-1">
                                     <span>{{$book->description}}</span>
@@ -44,8 +44,15 @@
                                     <h4 class="mr-1">{{$book->author}}</h4>
                                 </div>
                                 <h6 class="text-success">{{\App\Models\User::find($book->publisher)->name}}</h6>
+                                <form id="{{'delete-'.$book->id}}" method="POST" action="{{ route('book.destroy',parameters: $book->id) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
                                 <div class="d-flex flex-column mt-4">
                                     <a class="btn btn-primary btn-sm mt-5" href="{{ route('book.show',parameters: $book->id) }}" >Details</a>
+                                    <button class="btn btn-danger btn-sm mt-2" onclick="{
+                                    document.querySelector('#{{'delete-'.$book->id}}').submit()
+                                }">Delete</button>
                                 </div>
                             </div>
                         </div>
