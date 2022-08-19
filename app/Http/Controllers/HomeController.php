@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\{Book,Story};
 
 class HomeController extends Controller
 {
@@ -13,7 +14,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->only('index');
     }
 
     /**
@@ -24,5 +25,11 @@ class HomeController extends Controller
     public function index()
     {
         return redirect('/');
+    }
+    public function getContentsByCategory($id)
+    {
+        $book = Book::where('genre', '=',$id)->get();
+        $story = Story::where('genre', '=',$id)->get();
+        return view('search')->with('books',$book)->with('stories',$story);
     }
 }

@@ -1,7 +1,11 @@
 @extends('layouts.app')
 @section('content')
-
-    <div class="container mt-5">
+    <div class="row">
+        <div class="col-md-2 mt-5">
+            @include('components.sidebar')
+        </div>
+        <div class="col-md-10">
+    <div class="container">
         <div class="row px-5 justify-content-between">
             <div class="col-md-3 px-5">
                 <h3 class="text-primary">All Books</h3>
@@ -63,5 +67,7 @@
     </div>
     <div class="d-flex justify-content-center mt-5">
         {!! $books->links() !!}
+    </div>
+        </div>
     </div>
 @endsection

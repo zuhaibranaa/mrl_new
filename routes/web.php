@@ -21,6 +21,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::get('getItemsByCat/{id}',[\App\Http\Controllers\HomeController::class, 'getContentsByCategory'])->name('getItemsByCat');
 Route::resources([
     'book' => \App\Http\Controllers\BookController::class,
     'bookshelf' => \App\Http\Controllers\BookShelfController::class,

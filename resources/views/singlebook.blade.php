@@ -1,6 +1,11 @@
 @extends('layouts.app')
 @section('content')
-    <div class="row align-content-around mx-2">
+    <div class="row">
+        <div class="col-md-2 mt-5">
+            @include('components.sidebar')
+        </div>
+        <div class="col-md-10">
+            <div class="row align-content-around mx-2">
         <div class="col-md-4">
             <div class="card container pt-2 pb-2 bg-info bg-opacity-10">
                 <img src="{{asset('images/'.$book->image)}}" class="rounded"/>
@@ -118,6 +123,8 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
         </div>
     </div>
 @endsection
